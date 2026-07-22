@@ -15,15 +15,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Run OWASP ZAP API DAST Scan
-        uses: zaproxy/action-api@v0.7.0
+      - name: Run OWASP ZAP Full Scan
+        uses: zaproxy/action-full-scan@v0.13.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'https://owasp.org'
-          format: openapi
-
-      - name: Upload Security Report Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: owasp-zap-api-report
-          path: zap_out.html
+          artifact_name: 'owasp-zap-api-report'
