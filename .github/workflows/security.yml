@@ -1,0 +1,29 @@
+name: API Security & DevSecOps Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  api-security-scan:
+    runs-on: ubuntu-latest
+    name: OWASP ZAP API DAST Scan
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run OWASP ZAP API DAST Scan
+        uses: zaproxy/action-api@v0.7.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: 'https://owasp.org'
+          format: openapi
+
+      - name: Upload Security Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-zap-api-report
+          path: zap_out.html
