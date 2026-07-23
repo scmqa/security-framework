@@ -10,6 +10,9 @@ jobs:
   api-security-scan:
     runs-on: ubuntu-latest
     name: OWASP ZAP API DAST Scan
+    permissions:
+      contents: write
+      issues: write
 
     steps:
       - name: Checkout Code
@@ -21,4 +24,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'https://owasp.org'
           artifact_name: 'owasp-zap-api-report'
-
